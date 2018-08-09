@@ -67,7 +67,7 @@ export default class StatusesView extends JetView{
 
 			let values = form.getValues();
 			values.Name = values.Name.replace(/(\<(\/?[^>]+)>)/g, '');
-			values.Icon = values.Icon.replace("/(\<(\/?[^>]+)>)/g, '');
+			values.Icon = values.Icon.replace(/(\<(\/?[^>]+)>)/g, '');
 
 			statuses.add(values);
 
