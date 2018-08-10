@@ -20,8 +20,19 @@ export default class StatusesView extends JetView{
 				},
 				{
 					view:"button",
-					localId:"save",
-					label:"Save",
+					localId:"add",
+					label:"Add",
+					on:{
+						onItemClick:function(){
+							let form = this.getParentView();
+
+							if ( !form.validate() )
+								return false;
+
+							let values = form.getValues();
+							statuses.add(values);
+						}
+					}
 				}
 			],
 			rules: {
@@ -53,31 +64,28 @@ export default class StatusesView extends JetView{
 		};
 	}
 
-	ready(view){
-		const table = view.queryView({ view:"datatable" });
-		const form = view.queryView({ view:"form" });
-		const saveBtn = this.$$("save");
+	deleteItem(e, id){
+		webix.confirm({
+			title: "Delete",
+			text: "Delete this status?",
+			type:"confirm-warning",
+			callback:function(result){
+				if ( result ) {
+					statuses.remove(id);
 
-		form.sync(statuses);
-
-		form.bind(table);
-
-		saveBtn.attachEvent("onItemClick", function(){
-			if ( !form.validate() ) return false;
-
-			let values = form.getValues();
-			values.Name = values.Name.replace(/(\<(\/?[^>]+)>)/g, '');
-			values.Icon = values.Icon.replace(/(\<(\/?[^>]+)>)/g, '');
-
-			statuses.add(values);
-
-			form.clearValidation();
-
-			webix.message({
-				text: "Genre successfully added.",
-				type: "info",
-				expire: 4000,
-			});
+					webix.message({
+						type:"info",
+						text:"Status successfully removed."
+					});
+				}
+			}
 		});
+	}
+
+	init(view){
+		let datatable = view.queryView({view:"datatable"});
+
+		datatable.sync(statuses);
+		datatable.on_click.jsDeleteBtn = this.deleteItem;
 	}
 }

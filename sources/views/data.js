@@ -1,7 +1,6 @@
 import {JetView} from "webix-jet";
 import CountriesView from "views/countries";
 import StatusesView from "views/statuses";
-import DataMenuView from "views/data_menu";
 
 export default class DataView extends JetView{
 	config(){
@@ -14,7 +13,23 @@ export default class DataView extends JetView{
 				},
 				{
 					cols:[
-						DataMenuView,
+						{
+							localId:"statusesList",
+							view:"list",
+							width: 300,
+							template:"#value#",
+							select:true,
+							scroll:"auto",
+							data:[
+								{id:"statuses", value:"Statuses"},
+								{id:"countries", value:"Countries"}
+							],
+							on:{
+								onItemClick:function(id){
+									this.$scope.app.webix.$$(id).show();
+								}
+							}
+						},
 						{cells:[
 							{$subview:CountriesView},
 							{$subview:StatusesView},

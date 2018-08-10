@@ -4,11 +4,9 @@ import {countries} from "models/countries";
 export default class CountriesView extends JetView{
 	config(){
 		const table = {
-			localId:"tableId",
 			view:"datatable",
 			editable:true,
 			editaction:"dblclick",
-			scroll:"auto",
 			select:true,
 			columns:[
 				{ id:"Name",   header:"Country", fillspace:true, editor:"text", sort:"string"},
@@ -23,14 +21,30 @@ export default class CountriesView extends JetView{
 				{
 					view:"text",
 					name:"country",
-					placeholder:"Country Here"
+					invalidMessage:"Field `Country` must be filled."
 				},
 				{
 					view:"button",
-					localId:"save",
-					label:"Save"
+					localId:"add",
+					label:"Add",
+					on:{
+						onItemClick:function(){
+							let form = this.getParentView();
+
+							if ( !form.validate() )
+								return false;
+
+							let values = form.getValues();
+							countries.add({
+								Name:values.country
+							});
+						}
+					}
 				}
-			]
+			],
+			rules:{
+				country:webix.rules.isNotEmpty
+			}
 		};
 
 		return {
@@ -42,8 +56,28 @@ export default class CountriesView extends JetView{
 		};
 	}
 
+	deleteItem(e, id){
+		webix.confirm({
+			title: "Delete",
+			text: "Delete this country?",
+			type:"confirm-warning",
+			callback:function(result){
+				if ( result ) {
+					countries.remove(id);
+
+					webix.message({
+						type:"info",
+						text:"Country successfully removed."
+					});
+				}
+			}
+		});
+	}
+
 	init(view){
-		view.queryView({view:"datatable"}).parse(countries);
-		// this.$$("tableId").bind("formId");
+		let datatable = view.queryView({view:"datatable"});
+
+		datatable.sync(countries);
+		datatable.on_click.jsDeleteBtn = this.deleteItem;
 	}
 }

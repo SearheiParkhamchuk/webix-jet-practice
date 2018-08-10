@@ -5,12 +5,6 @@ import ContactsFormView from "views/contacts_form";
 
 export default class ContactsView extends JetView{
 	config(){
-		const add = {
-			view:"button",
-			localId:"addButton",
-			label:"Add"
-		};
-
 		return {
 			cols:[
 				{
@@ -21,7 +15,6 @@ export default class ContactsView extends JetView{
 							css:"sub-header"
 						},
 						ContactsListView,
-						add
 					]
 				},
 				ContactsFormView
