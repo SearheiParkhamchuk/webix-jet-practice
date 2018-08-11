@@ -3,6 +3,19 @@ import {statuses} from "models/statuses";
 
 export default class StatusesView extends JetView{
 	config(){
+		const table = {
+			view:"datatable",
+			editable:true,
+			editaction:"dblclick",
+			scrollX:false,
+			select:true,
+			columns:[
+				{ id:"Name",   header:"Status Name", fillspace:true, editor:"text", sort:"string"},
+				{ id:"Icon",   header:"Icon Name", editor:"text", sort:"string"},
+				{ id:"Delete", header:"", width:60, align:"center", template:"<span class='fa fa-trash delete-button jsDeleteBtn'></span>"}
+			],
+		};
+
 		const form = {
 			view:"form",
 			cols:[
@@ -40,19 +53,6 @@ export default class StatusesView extends JetView{
 				Icon: webix.rules.isNotEmpty,
 			}
 
-		};
-
-		const table = {
-			view:"datatable",
-			editable:true,
-			editaction:"dblclick",
-			scroll:"auto",
-			select:true,
-			columns:[
-				{ id:"Name",   header:"Status Name", fillspace:true, editor:"text", sort:"string"},
-				{ id:"Icon",   header:"Icon Name", editor:"text", sort:"string"},
-				{ id:"Delete", header:"", width:60, align:"center", template:"<span class='fa fa-trash delete-button jsDeleteBtn'></span>"}
-			],
 		};
 
 		return {

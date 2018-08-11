@@ -55,23 +55,6 @@ export default class ContactsFormView extends JetView{
 					cols:[
 						{
 							view:"button",
-							label:"Add",
-							localId:"add",
-							on:{
-								onItemClick: function(){
-									let form = this.$scope.getRoot();
-
-									if ( !form.validate() )
-										return false;
-
-									let values = form.getValues();
-									if ( values.id ) values.id = "";
-									contacts.add(values);
-								}
-							}
-						},
-						{
-							view:"button",
 							label:"Update",
 							localId:"update",
 							on:{
@@ -127,8 +110,8 @@ export default class ContactsFormView extends JetView{
 	}
 
 	urlChange(view){
-		let id = this.getParam("id");
-		if ( !id ) return false;
-		view.setValues(contacts.getItem(id));
+		let id = this.getParam("id", true);
+		if ( id && contacts.exists(id) )
+			view.setValues(contacts.getItem(id));
 	}
 }

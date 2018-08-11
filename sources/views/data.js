@@ -14,7 +14,6 @@ export default class DataView extends JetView{
 				{
 					cols:[
 						{
-							localId:"statusesList",
 							view:"list",
 							width: 300,
 							template:"#value#",
@@ -23,20 +22,38 @@ export default class DataView extends JetView{
 							data:[
 								{id:"statuses", value:"Statuses"},
 								{id:"countries", value:"Countries"}
-							],
-							on:{
-								onItemClick:function(id){
-									this.$scope.app.webix.$$(id).show();
-								}
-							}
+							]
 						},
-						{cells:[
-							{$subview:CountriesView},
-							{$subview:StatusesView},
-						]}
+						{
+							localId:"mult",
+							animate:false,
+							cells:[
+								{id:"statuses", $subview:StatusesView},
+								{id:"countries",$subview:CountriesView}
+							]
+						}
 					]
 				}
 			]
 		};
 	}
+
+	init(view){
+		let list = view.queryView({view:"list"});
+
+		this.on(list, "onAfterSelect", (id) => {
+			view.queryView({id:id}).show();
+			this.setParam("category", id, true);
+		});
+
+	}
+
+	urlChange(view){
+		let list = view.queryView({view:"list"});
+		let id = this.getParam("category") || list.getFirstId();
+
+		if ( id && list.exists(id) && id !== list.getSelectedId())
+			list.select(id);
+	}
+
 }

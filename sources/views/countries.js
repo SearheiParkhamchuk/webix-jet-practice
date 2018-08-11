@@ -7,6 +7,7 @@ export default class CountriesView extends JetView{
 			view:"datatable",
 			editable:true,
 			editaction:"dblclick",
+			scrollX:false,
 			select:true,
 			columns:[
 				{ id:"Name",   header:"Country", fillspace:true, editor:"text", sort:"string"},

@@ -3,7 +3,7 @@ import {contacts} from "models/contacts";
 
 export default class ContactsListView extends JetView{
 	config(){
-		return  {
+		const list = {
 			view: "list",
 			id:"contactList",
 			width:300,
@@ -14,13 +14,20 @@ export default class ContactsListView extends JetView{
 			"<div class='contact-delete delete-button js_delete_btn'><span class='fa fa-times'></span></div>",
 			type: {
 				height:65
-			},
-			on:{
-				onItemClick:function(id){
-					this.$scope.show("contacts?id=" + id);
-					this.$scope.app.callEvent("selectItem");
-				},
-			},
+			}
+		};
+
+		const btn = {
+			view:"button",
+			value:"Add Contact",
+			localId:"add_contact"
+		};
+
+		return {
+			rows:[
+				list,
+				btn
+			]
 		};
 	}
 
@@ -47,23 +54,43 @@ export default class ContactsListView extends JetView{
 	}
 
 	init(view){
-		view.sync(contacts);
-		view.on_click.js_delete_btn = this.deleteItem;
-
-		let id = this.getParam("id");
-		if ( id && view.exists(id)) {
-			view.select(id);
-		} else {
-			view.select(view.getFirstId());
-			this.setParam("id", "1", true);
-		}
-
+		let list = view.queryView({view:"list"});
+		let addBtn = view.queryView({localId:"add_contact"});
+		list.sync(contacts);
+		list.on_click.js_delete_btn = this.deleteItem;
 
 		this.on(this.app, "unSelectAll", (dataId) => {
 			if ( dataId ) {
-				view.unselect(dataId);
+				list.unselect(dataId);
 			}
 		});
+
+		this.on(list, "onAfterSelect", (id) => {
+			webix.delay(()=>{
+				this.show("contacts?id="+id);
+				this.app.callEvent("selectItem");
+			});
+		});
+
+		this.on(addBtn, "onItemClick", () => {
+			let countCOllection = contacts.count(),
+				randomItem = Math.round(Math.random() * countCOllection),
+				itemId =  contacts.getIdByIndex(randomItem);
+
+			contacts.copy(itemId, countCOllection + 1, contacts, {id:webix.uid()});
+
+			let lastId = list.getLastId();
+			list.select(lastId);
+			list.showItem(lastId);
+		});
+	}
+
+	urlChange(view){
+		let list = view.queryView({view:"list"});
+
+		let id = this.getParam("id") || contacts.getFirstId();
+		if ( id && contacts.exists(id) && id !== list.getSelectedId())
+			list.select(id);
 	}
 
 }

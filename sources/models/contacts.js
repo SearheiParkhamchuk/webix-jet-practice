@@ -11,20 +11,5 @@ export const contacts = new webix.DataCollection({
 		{"id":9,"Name":"Dorias Wan","Email":"doris@gmail.com","Status":1,"Country":2},
 		{"id":10,"Name":"As Wan","Email":"doris@gmail.com","Status":2,"Country":1},
 		{"id":11,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":1},
-		{"id":12,"Name":"Doris Wan","Email":"doris@gmail.com","Status":2,"Country":2},
-		{"id":13,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":3},
-		{"id":14,"Name":"Doris Wan","Email":"doris@gmail.com","Status":2,"Country":1},
-		{"id":15,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":2},
-		{"id":16,"Name":"Doris Wan","Email":"doris@gmail.com","Status":2,"Country":3},
-		{"id":17,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":1},
-		{"id":18,"Name":"Doris Wan","Email":"doris@gmail.com","Status":2,"Country":3},
-		{"id":19,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":3},
-		{"id":20,"Name":"Doris Wan","Email":"doris@gmail.com","Status":2,"Country":3},
-		{"id":21,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":3},
-		{"id":22,"Name":"Doris Wan","Email":"doris@gmail.com","Status":2,"Country":3},
-		{"id":23,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":3},
-		{"id":24,"Name":"Doris Wan","Email":"doris@gmail.com","Status":2,"Country":3},
-		{"id":25,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":3},
-		{"id":26,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":3},
-		{"id":27,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":3},]
+		{"id":12,"Name":"Doris Wan","Email":"doris@gmail.com","Status":1,"Country":3},]
 });
