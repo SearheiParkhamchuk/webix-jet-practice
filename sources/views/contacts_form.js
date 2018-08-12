@@ -5,6 +5,8 @@ import {contacts} from "models/contacts";
 
 export default class ContactsFormView extends JetView{
 	config(){
+		const _ = this.app.getService("locale")._;
+
 		return {
 
 			view:"form",
@@ -15,22 +17,22 @@ export default class ContactsFormView extends JetView{
 			elements:[
 				{
 					view:"text",
-					label:"User Name",
+					label:_("User Name"),
 					name:"Name",
 					labelPosition:"top",
-					invalidMessage:"Field `Name` must be filled."
+					invalidMessage:_("Field `Name` must be filled.")
 				},
 				{
 					view:"text",
-					label:"Email",
 					name:"Email",
+					label:_("Email"),
 					labelPosition:"top",
-					invalidMessage:"Field `Email` must be filled."
+					invalidMessage:_("Field `Email` must be filled.")
 				},
 				{
 					view:"combo",
 					name:"Country",
-					label:"Country",
+					label:_("Country"),
 					labelPosition:"top",
 					options:{
 						body:{
@@ -42,7 +44,7 @@ export default class ContactsFormView extends JetView{
 				{
 					view:"combo",
 					name:"Status",
-					label:"Status",
+					label:_("Status"),
 					labelPosition:"top",
 					options:{
 						body:{
@@ -55,7 +57,7 @@ export default class ContactsFormView extends JetView{
 					cols:[
 						{
 							view:"button",
-							label:"Update",
+							label:_("Update"),
 							localId:"update",
 							on:{
 								onItemClick: function(){
@@ -71,7 +73,7 @@ export default class ContactsFormView extends JetView{
 						},
 						{
 							view:"button",
-							label:"Clear",
+							label:_("Clear"),
 							localId:"clear",
 							on:{
 								onItemClick: function(){

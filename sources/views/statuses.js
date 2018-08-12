@@ -1,73 +1,14 @@
-import {JetView} from "webix-jet";
+import DataTable from "views/dataTable";
 import {statuses} from "models/statuses";
 
-export default class StatusesView extends JetView{
-	config(){
-		const table = {
-			view:"datatable",
-			editable:true,
-			editaction:"dblclick",
-			scrollX:false,
-			select:true,
-			columns:[
-				{ id:"Name",   header:"Status Name", fillspace:true, editor:"text", sort:"string"},
-				{ id:"Icon",   header:"Icon Name", editor:"text", sort:"string"},
-				{ id:"Delete", header:"", width:60, align:"center", template:"<span class='fa fa-trash delete-button jsDeleteBtn'></span>"}
-			],
-		};
-
-		const form = {
-			view:"form",
-			cols:[
-				{
-					view:"text",
-					name:"Name",
-					placeholder:"Status Here",
-					invalidMessage: "Field must be filled in.",
-				},
-				{
-					view:"text",
-					name:"Icon",
-					placeholder:"Icon Name Here",
-					invalidMessage: "Field must be filled in.",
-				},
-				{
-					view:"button",
-					localId:"add",
-					label:"Add",
-					on:{
-						onItemClick:function(){
-							let form = this.getParentView();
-
-							if ( !form.validate() )
-								return false;
-
-							let values = form.getValues();
-							statuses.add(values);
-						}
-					}
-				}
-			],
-			rules: {
-				Name: webix.rules.isNotEmpty,
-				Icon: webix.rules.isNotEmpty,
-			}
-
-		};
-
-		return {
-			id:"statuses",
-			rows:[
-				table,
-				form
-			]
-		};
-	}
+export default class StatusesView extends DataTable{
 
 	deleteItem(e, id){
+		const _ = this.$scope.app.getService("locale")._;
+
 		webix.confirm({
-			title: "Delete",
-			text: "Delete this status?",
+			title: _("Delete"),
+			text: _("Delete this row?"),
 			type:"confirm-warning",
 			callback:function(result){
 				if ( result ) {
@@ -75,7 +16,7 @@ export default class StatusesView extends JetView{
 
 					webix.message({
 						type:"info",
-						text:"Status successfully removed."
+						text:_("Removed success.")
 					});
 				}
 			}
@@ -83,9 +24,19 @@ export default class StatusesView extends JetView{
 	}
 
 	init(view){
-		let datatable = view.queryView({view:"datatable"});
+		let datatable = view.queryView({view:"datatable"}),
+			form = view.queryView({localId:"addForm"});
 
 		datatable.sync(statuses);
 		datatable.on_click.jsDeleteBtn = this.deleteItem;
+
+		this.on(view.queryView({localId:"add"}), "onItemClick", () => {
+			if ( !form.validate() )
+				return false;
+
+			let values = form.getValues();
+			statuses.add(values);
+			form.clear();
+		});
 	}
 }

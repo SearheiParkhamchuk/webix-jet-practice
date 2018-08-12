@@ -3,6 +3,8 @@ import {contacts} from "models/contacts";
 
 export default class ContactsListView extends JetView{
 	config(){
+		const _ = this.app.getService("locale")._;
+
 		const list = {
 			view: "list",
 			id:"contactList",
@@ -19,7 +21,7 @@ export default class ContactsListView extends JetView{
 
 		const btn = {
 			view:"button",
-			value:"Add Contact",
+			value:_("Add Contact"),
 			localId:"add_contact"
 		};
 

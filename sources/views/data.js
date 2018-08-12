@@ -4,10 +4,12 @@ import StatusesView from "views/statuses";
 
 export default class DataView extends JetView{
 	config(){
+		const _ = this.app.getService("locale")._;
+
 		return {
 			rows:[
 				{
-					template:"<h1 class='h1'>Data</h1>",
+					template:_("<h1 class='h1'>Data</h1>"),
 					height:50,
 					css:"sub-header"
 				},
@@ -20,8 +22,8 @@ export default class DataView extends JetView{
 							select:true,
 							scroll:"auto",
 							data:[
-								{id:"statuses", value:"Statuses"},
-								{id:"countries", value:"Countries"}
+								{id:"statuses", value:_("Statuses")},
+								{id:"countries", value:_("Countries")}
 							]
 						},
 						{
