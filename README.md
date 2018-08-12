@@ -1,5 +1,8 @@
 Webix Jet Demo App
 ===================
+### Link
+
+https://searheiparkhamchuk.github.io/webix-jet-practice/
 
 ### How to run
 
