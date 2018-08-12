@@ -40,6 +40,7 @@ export default class CountriesView extends DataTable{
 				return false;
 
 			let values = form.getValues();
+
 			countries.add(values);
 			form.clear();
 		});

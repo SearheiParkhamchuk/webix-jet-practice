@@ -16,7 +16,7 @@ export default class MyApp extends JetApp{
 }
 
 let myApp = new MyApp();
-myApp.use(plugins.Locale,{lang:"en"});
+myApp.use(plugins.Locale,{lang:"ru"});
 myApp.use(plugins.Locale, { storage:webix.storage.local });
 
 if (!BUILD_AS_MODULE){

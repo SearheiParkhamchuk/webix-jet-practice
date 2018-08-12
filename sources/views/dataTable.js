@@ -40,8 +40,8 @@ export default class DataTable extends JetView{
 			scroll:"auto",
 			select:true,
 			columns:[
-				{ id:"Name",   header:_("Name"), fillspace:true, editor:"text", sort:"string"},
-				{ id:"Icon",   header:_("Icon"), editor:"text", sort:"string"},
+				{ id:"Name",   header:_("Name"), fillspace:3, editor:"text", sort:"string"},
+				{ id:"Icon",   header:_("Icon"), fillspace:1, editor:"text", sort:"string"},
 				{ id:"Delete", header:"", width:60, align:"center", template:"<span class='fa fa-trash delete-button jsDeleteBtn'></span>"}
 			],
 		};

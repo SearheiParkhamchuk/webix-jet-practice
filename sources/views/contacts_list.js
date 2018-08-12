@@ -61,6 +61,20 @@ export default class ContactsListView extends JetView{
 		list.sync(contacts);
 		list.on_click.js_delete_btn = this.deleteItem;
 
+		contacts.waitData.then(() => {
+			let id = this.getParam("id") || list.getFirstId();
+
+			if ( id ) {
+				let checkId = webix.ajax("http://localhost:8096/api/v1/contacts/" + id);
+
+				checkId.then((data) => {
+					let existItem = data.json().id;
+					if ( existItem ) list.select(id);
+				});
+			}
+
+		});
+
 		this.on(this.app, "unSelectAll", (dataId) => {
 			if ( dataId ) {
 				list.unselect(dataId);
@@ -68,10 +82,8 @@ export default class ContactsListView extends JetView{
 		});
 
 		this.on(list, "onAfterSelect", (id) => {
-			webix.delay(()=>{
-				this.show("contacts?id="+id);
-				this.app.callEvent("selectItem");
-			});
+			this.show("contacts?id="+id);
+			this.app.callEvent("selectItem");
 		});
 
 		this.on(addBtn, "onItemClick", () => {
@@ -86,13 +98,4 @@ export default class ContactsListView extends JetView{
 			list.showItem(lastId);
 		});
 	}
-
-	urlChange(view){
-		let list = view.queryView({view:"list"});
-
-		let id = this.getParam("id") || contacts.getFirstId();
-		if ( id && contacts.exists(id) && id !== list.getSelectedId())
-			list.select(id);
-	}
-
 }

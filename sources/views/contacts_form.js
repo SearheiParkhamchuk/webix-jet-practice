@@ -57,6 +57,25 @@ export default class ContactsFormView extends JetView{
 					cols:[
 						{
 							view:"button",
+							label:_("Add"),
+							localId:"add",
+							on:{
+								onItemClick: function(){
+									let form = this.$scope.getRoot();
+
+									if ( !form.validate() )
+										return false;
+
+									let values = form.getValues();
+									contacts.add(values);
+
+									form.clear();
+									form.clearValidation();
+								}
+							}
+						},
+						{
+							view:"button",
 							label:_("Update"),
 							localId:"update",
 							on:{
